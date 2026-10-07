@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="683ff8ae-5408-4711-9390-177b637576a9" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="main-feature-updateFlow" doc:id="86bf11cc-bd1c-4d0c-9c1c-ef5d036c6b38" >
+		<http:listener doc:name="Listener" doc:id="0872bd99-b334-4735-8879-43a9416aecb0" path="/api*/loans" config-ref="HTTP_Listener_config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="28161be8-91fc-4ef1-aa3f-f52ce59f4a12" message="state Logger"/>
+		<ee:transform doc:name="Transform Message" doc:id="ca0f365d-544c-478d-8eff-cd4990c2a6d9" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"msg":"response from git"
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
